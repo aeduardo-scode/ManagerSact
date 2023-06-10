@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interfaz Scrum</title>
+    <!-- Bootstrap 5 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <!-- Froala  -->
+    <link href="../node_modules/froala-editor/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+    <!-- Jquery -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <!-- DatePicker? -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- SweetAlert -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.11/dist/sweetalert2.min.css" rel="stylesheet">
+    <!-- Recurso Propio -->
+    <link rel="stylesheet" href="../asset/css/style.css">
+
+</head>
+
+<body class="bg-dark">
+    <div class="m-4 px-4 py-6 d-flex title-central">
+        <i class="bi bi-stack fs-3 me-3" style="color: #ff6219;"></i>
+        <h1 class="text-light fs-3 fw-semibold letter-spacing-3">Manager Sact</h1>
+    </div>
+    <main class="bg-light m-5 shadow rounded">
+        <div class="d-flex justify-content-between m-4 p-4">
+            <div>
+                <button type="button" class="btn-header btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#nuevaTareaModal">
+                    Nueva Tarea
+                </button>
+            </div>
+            <div>
+                <button type="button" class="btn-header" data-bs-toggle="modal" data-bs-target="#miModal">
+                    Historico Tareas
+                </button>
+            </div>
+
+        </div>
+        <div class="container d-flex justify-content-center align-content-center my-5">
+            <div class="d-inline-flex justify-content-center align-content-center" id="bubbles">
+                <div class="">
+                    <div class="bg-secondary"></div>
+                    <span class="font-monospace fw-bold text-secondary">Backlog</span>
+                    <tool-tip role="tooltip">
+                        <b>Tareas pendientes</b>
+                    </tool-tip>
+                </div>
+                <div class="">
+                    <div class="bg-warning"></div>
+                    <span class="font-monospace fw-bold text-warning">Progress</span>
+                    <tool-tip role="tooltip">
+                        <b>Tareas en progreso</b>
+                    </tool-tip>
+                </div>
+                <div class="">
+                    <div class="bg-danger"></div>
+                    <span class="font-monospace fw-bold text-danger">Block</span>
+                    <tool-tip role="tooltip">
+                        <b>Tareas bloqueadas</b>
+                    </tool-tip>
+                </div>
+                <div class="">
+                    <div class="bg-success"></div>
+                    <span class="font-monospace fw-bold text-success">Completed</span>
+                    <tool-tip role="tooltip">
+                        <b>Tareas completadas</b>
+                    </tool-tip>
+                </div>
+            </div>
+        </div>
+        <section class="row text-center align-items-center justify-content-center p-4">
+            <section class="col">
+                <div class="d-flex justify-content-center">
+                    <div class="w-75 bg-dark p-2 text-light rounded-top">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold font-monospace">
+                                Proyecto:
+                            </span>
+                            <div class="progress w-75">
+                                <div id="barra-progreso" class="progress-bar" role="progressbar" style="width: 0%"
+                                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-secondary p-4 mx-4 rounded">
+                    <div class="title-h4">
+                        <h4>Backlog</h4>
+                    </div>
+                    <div id="backlog" class="noselect">
+                        <div id="noHayBacklog" class="bg-light text-center p-2 text-secondary">Crea una tarea</div>
+                    </div>
+                </div>
+            </section>
+            <!-- Sección Sprint -->
+            <section class="col">
+                <div class="d-flex">
+                    <button type="button" class="btn-sprint" data-bs-toggle="modal" data-bs-target="#crearSprintModal">
+                        <i class="bi bi-plus"></i>
+                    </button>
+                </div>
+                <div class="bg-primary p-4 rounded">
+                    <div class="bg-dark w-50 p-1 my-2 text-light rounded">
+                        Nº <span id="numSprint" class="fw-bold"> 0</span> -
+                        <span id="tituSprint" class="fw-bold">Sin selección</span>
+                    </div>
+                    <!-- Cada tarea tendrá su botón para enviar a la Vista Progress -->
+                    <div class="title-h4">
+                        <h4>Sprint</h4>
+                    </div>
+                    <div id="sprint-style">
+                        <div class="" id="sprint">
+                        </div>
+                    </div>
+                    <div id="lista-sprints" class="dropup-center dropup mt-5">
+                        <button class="btn btn-outline-light btn-block" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Lista de Sprints
+                        </button>
+                        <div class="dropdown-menu w-100">
+                            <footer class="container rounded p-2 d-flex align-items-cente">
+                                <table class="table table-primary table-sm rounded">
+                                    <thead class="thead-primary text-center">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Sprint</th>
+                                            <th>Finalización</th>
+                                            <th>Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                        <caption id="noHaySprint" class="bg-secondary text-center text-light">No hay
+                                            sprint</caption>
+                                    </tbody>
+                                </table>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Fin Sección Sprint -->
+            <!-- Sección Progress y Block -->
+            <section class="col">
+                <!-- Se tiene en cuenta el Sprint Seleccionado en la tabla de Sprint -->
+                <div class="w-25 position-relative">
+                    <span id="cronometro" class="w-25 bg-dark text-light p-2 px-4 rounded">0.Días</span>
+                </div>
+                <div class="bg-warning p-4 mb-2 rounded">
+                    <div class="title-h4">
+                        <h4>Progress</h4>
+                    </div>
+                    <div id="progress">
+                        <table class="table table-warning table-sm rounded">
+                            <caption class="text-light"></caption>
+                            <thead class="thead-success">
+                                <tr>
+                                    <th>Sprint</th>
+                                    <th>Titulo</th>
+                                    <th>Tiempo tarea</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <caption id="noHayProgress" class="bg-light text-center">No hay tareas</caption>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <!-- Block -->
+                <div class="bg-danger p-4 rounded">
+                    <div class="title-h4">
+                        <h4>Block</h4>
+                    </div>
+                    <div id="block">
+                        <table class="table table-danger table-sm rounded">
+                            <caption class="text-light"></caption>
+                            <thead class="thead-success">
+                                <tr>
+                                    <th>Sprint</th>
+                                    <th>Titulo</th>
+                                    <th>Tiempo tarea</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <caption id="noHayBlock" class="bg-light text-center">No hay tareas</caption>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </section>
+            <!-- Fin Sección Progress y Block -->
+            <!-- Sección Completed -->
+            <section class="col position-relative">
+                <div class="bg-success p-4 rounded">
+
+                    <div class="title-h4">
+                        <h4>Completed</h4>
+                    </div>
+                    <div id="completed">
+                        <!-- Tener en cuenta entre la seccion Progress y Block -->
+                        <table class="table table-success table-sm rounded">
+                            <caption class="text-light"></caption>
+                            <thead class="thead-success">
+                                <tr>
+                                    <th>Sprint</th>
+                                    <th>Titulo</th>
+                                    <th>Tiempo final</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <caption id="noHayCompleted" class="bg-light text-center">No hay tareas</caption>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </section>
+            <!-- Fin Sección Completed -->
+        </section>
+        <!-- Se carga la tabla de los elementos en estado Papelera -->
+        <div class="d-flex justify-content-lg-end">
+            <button type="button" class="btn btn-outline-secondary m-3" style="width:70px;">
+                <a href="#papelera" class="text-decoration-none text-light" data-bs-toggle="modal"
+                    data-bs-target="#papelera">
+                    <img src="../asset/css/svg/papelera.svg" alt="papelera" class="w-100">
+                </a>
+            </button>
+        </div>
+    </main>
+    <!---------------------------------------- Formularios/ventanas ------------------------------------------------->
+    <!-- Tarea -->
+    <div class="modal fade" id="nuevaTareaModal" tabindex="-1" aria-labelledby="nuevaTareaModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="nuevaTareaModalLabel">Nueva Tarea</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="form-task" action="" method="post">
+                        <div class="mb-3">
+                            <label for="tituloTarea" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="tituloTarea">
+                        </div>
+                        <div class="mb-3">
+                            <label for="fechaFinalizacionTarea" class="form-label">Fecha de finalización</label>
+                            <input type="date" class="form-control" id="fechaFinalizacionTarea">
+                        </div>
+                        <div class="mb-3">
+                            <label for="porcentajeTarea" class="form-label">Porcentaje</label>
+                            <input type="number" class="form-control" id="porcentajeTarea" min="0" max="100">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editorTarea" class="form-label">Descripción</label>
+                            <div class="" id="editorTarea" name="editorTarea"></div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Tarea -->
+    <!-- Historico -->
+    <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="miModalLabel">Historial Tareas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table id="table-historico" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>EstadoAnterior</th>
+                                <th>EstadoActual</th>
+                                <th>IdTarea</th>
+                                <th>TituloTarea</th>
+                                <th>FechaAcción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Historico -->
+    <!-- Papelera -->
+    <div class="modal fade" id="papelera" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Papelera</h5>
+                </div>
+                <div class="modal-body">
+                    <table id="form-papelera" class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Titulo</th>
+                                <th scope="col">Descripcion</th>
+                                <th scope="col">Fecha-fin</th>
+                                <th scope="col">Peso</th>
+                                <th scope="col">Option</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <caption id="noHayPapelera" class="bg-secondary text-center text-light">No hay tareas
+                            </caption>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn btn-secondary w-25" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Papelera -->
+    <!-- Sprint -->
+    <div class="modal fade" id="crearSprintModal" tabindex="-1" aria-labelledby="crearSprintModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="crearSprintModalLabel">Crear Sprint</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-sprint" method="post" action="">
+                        <div class="mb-3">
+                            <label for="tituloSprint" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="tituloSprint">
+                        </div>
+                        <div class="mb-3">
+                            <label for="fechaFinalizacionSprint" class="form-label">Fecha de finalización</label>
+                            <input type="date" class="form-control" id="fechaFinalizacionSprint">
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Sprint -->
+    <!-- Editar -->
+    <div class="modal fade" id="editarTareaModal" tabindex="-1" aria-labelledby="editarTareaModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarTareaModalLabel">Editar Tarea</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="form-editar" method="post" action="">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="tituloEditar">Título</label>
+                            <input type="text" class="form-control" id="tituloEditar" rows="3">
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcionEditar">Descripción</label>
+                            <textarea class="form-control" id="descripcionEditar" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaFinEditar">Fecha de finalización</label>
+                            <input type="date" class="form-control" id="fechaFinEditar">
+                        </div>
+                        <div class="form-group">
+                            <label for="pesoEditar">Peso</label>
+                            <input type="number" class="form-control" id="pesoEditar" min="0" max="100">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-warning">Editar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Editar -->
+    <!--------------------------------------- Fin formularios/ventanas ---------------------------------------------------------------->
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+        integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Froala -->
+    <script type="text/javascript" src="../node_modules/froala-editor/js/froala_editor.pkgd.min.js"></script>
+    <!-- Sortable -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.11/dist/sweetalert2.all.min.js"
+        type="text/javascript"></script>
+    <!-- DatePicker -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <!-- DataTable JS -->
+    <script defer src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <!-- Recursos Propios-->
+    <script src="../core/main.js" type="module" defer></script>
+    <script src="../core/index.js" type="text/javascript"></script>
+</body>
+
+</html>

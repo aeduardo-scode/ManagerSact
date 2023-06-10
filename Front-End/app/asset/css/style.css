@@ -1,0 +1,294 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2&display=swap');
+
+.noselect{
+    user-select: none !important;
+}
+
+:root {
+    --bg: ;
+    --titulo4: #ead0d0;
+    --sombraDrag: rgba(149,153,159,.16);
+}
+
+*{
+    font-family: 'Cabin', sans-serif;
+}
+
+/* Titulos */
+
+h4 {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    font-family: "Exo 2", sans-serif;
+    font-weight: 500;
+    font-size: 50px;
+    color: #fbf7f7;
+    -webkit-text-stroke: #0a0a12;
+    -webkit-transition: all 0.4s ease 0s;
+    -o-transition: all 0.4s ease 0s;
+    transition: all 1s ease 0s;
+  }
+  
+  h4 span {
+    display: block;
+    font-size: 0.5em;
+    line-height: 1.3;
+  }
+  h4 em {
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .title-h4 h4 {
+    font-size: 25px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.5em;
+    padding-bottom: 15px;
+    position: relative;
+    text-align: left;
+  }
+
+  .title-h4 h4:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 5px;
+    width: 55px;
+    background-color: #111;
+  }
+  .title-h4 h4:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 2px;
+    height: 1px;
+    width: 100%;
+    max-width: 400px;
+    background-color: #333;
+  }
+
+  .title-central h1{
+    font-size: 25px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.5em;
+    padding-bottom: 15px;
+    position: relative;
+    text-align: right;
+  }
+
+  .title-central h1:before{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 1000px;
+    background-color: #f3ecec;
+  } 
+
+
+#bubbles > div > div {
+    position: absolute;
+    border-radius: 50%;
+    margin-right: 10rem;
+    width: 28px;
+    height: 26px;
+    left: -35px;
+    border: 3px solid #333030;
+}
+
+#bubbles>div {
+    position: relative;
+    margin-right: 6em;
+}
+
+/* Tool-tip bubbles */
+
+tool-tip{
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+    width: 150px;
+    box-shadow: 0 0 10px rgb(161, 160, 160);
+    padding: 10px;
+    font-size: .8rem;
+    border-radius: 8px;
+    text-align: center;
+    top: -200%;
+    left: -80%;
+    opacity: 0;
+    transition: opacity .3s ease;
+}
+
+
+:has(> tool-tip){
+    position: relative;
+}
+
+:has(> tool-tip):hover tool-tip{
+    opacity: 1;
+}
+
+/* End tool-tip bubbles */
+
+/* Clases para los estilos de las listas Drag and Drop */
+
+/*?           BACKLOG            ?*/
+#backlog .card{
+    cursor: move;
+}
+
+#backlog .card.selected{
+    transform: scale(1.02) rotate(-1deg);
+    box-shadow: 0 px 0px 10px var(--sombraDrag);
+    background: rgb(233, 232, 232);
+}
+
+#backlog .card.drag{
+    opacity: 0;
+}
+/*                  ?                    */
+
+/* ?            SPRINT            */
+.arrastra{
+    border: 2px dashed var(--titulo4);
+    border-radius: 5px;
+    padding: 1rem;
+    margin: 5px;
+    /* Agregar transicion */
+}
+
+.arrastra:before{
+    content: "Arrastrar aquí tus tareas";
+    font-size: 18px;
+    font-weight: bold;
+    color:rgb(192, 192, 192);
+}
+
+#sprint .card{
+    cursor: move;
+}
+
+#sprint .card.selected{
+    transform: scale(1.02) rotate(-1deg);
+    box-shadow: 0 px 0px 10px var(--sombraDrag);
+    background: rgb(233, 232, 232);
+}
+
+#sprint .card.drag{
+    opacity: 0;
+}
+
+
+/*                  ?               */
+
+/*----------------------------------- Botones ---------------------------*/
+.btn-sprint {
+    background-color: #13aa52;
+    border: 1px solid #13aa52;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    outline: none;
+    outline: 0;
+    padding: 6px 10px;
+    text-align: center;
+    transform: translateY(0);
+    transition: transform 150ms, box-shadow 150ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .btn-sprint:hover {
+    box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+    transform: translateY(-2px);
+  }
+  
+  @media (min-width: 768px) {
+    .btn-sprint  {
+      padding: 10px 25px;
+    }
+  }
+
+/* Botones de la parte superior */
+
+.btn-header {
+    backface-visibility: hidden;
+    background: #7D4497; /*453ef5*/
+    border: 0;
+    border-radius: 1.6rem;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: .12em;
+    line-height: 1.3;
+    padding: 1rem 1.25rem;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transform: translateZ(0) scale(1);
+    transition: transform .2s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .btn-header:disabled {
+    color: #787878;
+    cursor: auto;
+  }
+  
+  .btn-header:not(:disabled):hover {
+    transform: scale(1.05);
+  }
+  
+  .btn-header:not(:disabled):hover:active {
+    transform: scale(1.05) translateY(.125rem);
+  }
+  
+  .btn-header:focus {
+    outline: 0 solid transparent;
+  }
+  
+  .btn-header:focus:before {
+    border-width: .125rem;
+    content: "";
+    left: calc(-1*.375rem);
+    pointer-events: none;
+    position: absolute;
+    top: calc(-1*.375rem);
+    transition: border-radius;
+    user-select: none;
+  }
+  
+  .btn-header:focus:not(:focus-visible) {
+    outline: 0 solid transparent;
+  }
+  
+  .btn-header:not(:disabled):active {
+    transform: translateY(.125rem);
+  }
+
+  .btn > *{
+    border-radius: 50px;
+  }
+
+
+  /* ------------------------------------------------------------------------------ */

@@ -1,0 +1,51 @@
+Funcionalidades:
+
+1. TABLERO KANBAN 
+
+Tarea: Componente que tiene: Titulo, Descripcion, Fechas inicio y fecha fin, 4 estados, peso de la tarea, prioridades (Indice dentro de un sprint) y posicion (Indice para ordenar en el Sortable y almacenar en la BD).
+
+
+- Una tabla 
+	- Backlog
+	- En progreso
+	- Bloqueadas
+	- Finalizadas
+
+2. Estadisticas
+
+- Progreso general del proyecto
+- Grafico del proyecto (torta)
+- Grafico de ritmo de cambio
+
+Ritmo:  Definir en cuestiones de Sprint y tarea finalizada (Salud del proyecto)
+
+Sprint: Un espacio donde comprometemos tareas, es decir, el sprint, es un conjunto de tareas enmarcadas con una fecha de inicio y una fecha de fin, contempla un  porcentaje arbitrario para poder definir que el sprint ha sido productivo, si al final del sprint esta por debajo de ese porcentaje arbitrario.
+
+SALUD: es el bienestar medido en % de la tarea dentro de un sprint o proyecto en general según su peso y su estado.
+
+Peso de tarea: la suma de las tareas da 100% del proyecto, por lo que el peso es el % de una tarea dentro del proyecto
+
+Completitud de tareas: 
+Se le aplica uno de los siguientes porcentajes sobre el peso de la tarea para medir el valor de la salud del proyecto
+
+Block 0%
+En progreso 50%
+Terminado del 100% (Del peso de la tarea dentro del Sprint)
+
+- Peso de un Sprint (media de tareas con su porcentaje)
+
+SALUD del Proyecto: Inicio => Fecha especifica y Terminal => Fecha especifica o antes. Penalizacion de un sprint, necesariamente nos amenaza con que el proyecto no será finalizada a tiempo
+
+Como recuperar la Salud? Que dentro del sprint siguiente, no solamente cumplas con la tarea del sprint, que cumplas con el porcentaje de la tarea anterior, en definitiva, llevas una tarea de arrastre
+Como ganar tiempo? Adelantar tareas de otro sprint, restandole la negatividad al sprint anterior no cumplido
+
+Como acumulas las fechas o porcentajes? 
+Vienen de lo siguiente: 
+	- La tarea del sprint anterior, tenía un peso X% y si por completar
+
+SALUD (Tabla con amenazas: arrastrados(la tarea en el primer sprint y dejamos de cumplir tareas del siguiente sprint) y acumulados(suma de % de tareas en sprints))
+
+Estados del proyecto -> Olimpico
+			   -> Saludable
+			   -> Enfermo
+			   -> Muerto
