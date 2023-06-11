@@ -1,6 +1,6 @@
-import { postLogin } from '../access.js';
-import { Authentication } from "../models/usuarioModel.js";
-import { getLogin } from "../views/usuarioView.js";
+import { postLogin, postRegister } from '../access.js';
+import { Authentication, Usuario } from "../models/usuarioModel.js";
+import { getLogin, getFormRegister } from "../views/usuarioView.js";
 
 export function loguearse() {
 
@@ -9,11 +9,24 @@ export function loguearse() {
     let usuario = new Authentication(datos.usuario, datos.clave);
 
     postLogin(usuario)
-        .then(postLogin => {
-        })
+        .then(postLogin => {})
         .catch(error => {
-            // showErrorMessage(error.message);
             alert(error.message);
         });
+
+}
+
+export function registrarse() {
+
+    const datos = getFormRegister();
+
+    let usuario = new Usuario(datos.nombre, datos.apellidos, datos.usuario, datos.clave);
+
+    postRegister(usuario)
+        .then(postRegister => {})
+        .catch(error => {
+            alert(error.message);
+        });
+
 
 }
